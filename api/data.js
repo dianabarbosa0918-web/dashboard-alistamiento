@@ -10,7 +10,17 @@ const MESES = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO"
 function norm(s) {
   return (s == null ? '' : '' + s).replace(/\u00a0/g, ' ').trim();
 }
-
+function excelSerialToStr(n) {
+  const date = new Date(Date.UTC(1899, 11, 30) + n * 86400000);
+  const dd = String(date.getUTCDate()).padStart(2, '0');
+  const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const yyyy = date.getUTCFullYear();
+  return `${dd}/${mm}/${yyyy}`;
+}
+function normFecha(v) {
+  if (typeof v === 'number') return excelSerialToStr(v);
+  return norm(v);
+}
 function normEstado(v) {
   v = norm(v).toUpperCase();
   if (v.includes("DETENIDO")) return "ALISTAMIENTO DETENIDO";
@@ -66,8 +76,7 @@ function flatten(A) {
       vitrina: norm(row[cVit]).toUpperCase(), color: norm(row[cCol]).toUpperCase(),
       cargo: norm(row[cCar]).toUpperCase(), estado: normEstado(row[cEst]),
       sla: (cSla >= 0 ? norm(row[cSla]) : ''),
-      freg: (cReg >= 0 ? norm(row[cReg]) : ''), fent: (cEnt >= 0 ? norm(row[cEnt]) : '')
-    });
+      freg: (cReg >= 0 ? normFecha(row[cReg]) : ''), fent: (cEnt >= 0 ? normFecha(row[cEnt]) : ''));
   }
   return out;
 }
