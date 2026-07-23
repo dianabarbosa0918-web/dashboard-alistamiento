@@ -76,7 +76,8 @@ function flatten(A) {
       vitrina: norm(row[cVit]).toUpperCase(), color: norm(row[cCol]).toUpperCase(),
       cargo: norm(row[cCar]).toUpperCase(), estado: normEstado(row[cEst]),
       sla: (cSla >= 0 ? norm(row[cSla]) : ''),
-      freg: (cReg >= 0 ? normFecha(row[cReg]) : ''), fent: (cEnt >= 0 ? normFecha(row[cEnt]) : ''));
+      freg: (cReg >= 0 ? normFecha(row[cReg]) : ''), fent: (cEnt >= 0 ? normFecha(row[cEnt]) : '')
+       });
   }
   return out;
 }
